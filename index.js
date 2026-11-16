@@ -1,38 +1,91 @@
-
-const mineflayer = require('mineflayer');
-
-function createBot() {
-  const bot = mineflayer.createBot({
-    host: 'indiansfrindssmp.aternos.me', // Yahan apna Aternos Server ka IP daalein
-    port: 64139,                   // Apna Server Port daalein
-    username: 'Mobile_AFK_Bot',    // Bot ka naam (Cracked server ke liye kuch bhi)
-    version: false                 // Auto version detect
-  });
-
-  bot.on('spawn', () => {
-    console.log('Bot successfully server mein join ho gaya hai!');
-    
-    // Anti-AFK movement: Har 10 second mein jump karega aur idhar-udhar dekhega
-    setInterval(() => {
-      bot.setControlState('jump', true);
-      setTimeout(() => {
-        bot.setControlState('jump', false);
-      }, 500);
-      
-      const yaw = Math.random() * Math.PI * 2;
-      const pitch = (Math.random() - 0.5) * Math.PI;
-      bot.look(yaw, pitch);
-    }, 10000);
-  });
-
-  bot.on('end', () => {
-    console.log('Bot disconnect ho gaya. 5 second mein reconnect ho raha hai...');
-    setTimeout(createBot, 5000);
-  });
-
-  bot.on('error', (err) => {
-    console.log('Error aaya:', err.message);
-  });
-}
-
-createBot();
+{
+  "name": "AFK Bot",
+  "bot-account": {
+    "username": "PerzaanLive",
+    "password": "",
+    "type": "offline"
+  },
+  "server": {
+    "ip": "example.aternos.me",
+    "port": 75375,
+    "version": "1.21.1"
+  },
+  "position": {
+    "enabled": true,
+    "x": 0,
+    "y": 100,
+    "z": 0
+  },
+  "utils": {
+    "auto-auth": {
+      "enabled": true,
+      "password": "Perzuu"
+    },
+    "anti-afk": {
+      "enabled": true,
+      "sneak": true
+    },
+    "chat-messages": {
+      "enabled": true,
+      "repeat": true,
+      "repeat-delay": 500,
+      "messages": [
+        "I'm a regular player",
+        "Subscribe to Perzaan Gaming!",
+        "I like to play Minecraft!"
+      ]
+    },
+    "chat-log": true,
+    "auto-reconnect": true,
+    "auto-reconnect-delay": 2000,
+    "max-reconnect-delay": 20000,
+    "periodic-rejoin": {
+      "enabled": false,
+      "min-interval": 20,
+      "max-interval": 60
+    }
+  },
+  "movement": {
+    "enabled": true,
+    "circle-walk": {
+      "enabled": true,
+      "radius": 4,
+      "speed": 3000
+    },
+    "look-around": {
+      "enabled": true,
+      "interval": 5000
+    },
+    "random-jump": {
+      "enabled": true,
+      "interval": 10000
+    }
+  },
+  "modules": {
+    "avoidMobs": true,
+    "combat": true,
+    "beds": true,
+    "chat": true,
+    "console-commands": true
+  },
+  "combat": {
+    "attack-mobs": true,
+    "auto-eat": true
+  },
+  "beds": {
+    "pick-up-day": true,
+    "place-night": true
+  },
+  "discord": {
+    "enabled": true,
+    "webhookUrl": "https://discord.com/api/webhooks/1472567640521183243/7DzSIaCSM_9-5DjzrlAuP9Tdj7Y3yAP6BHg3scKzhaRFdVk8ctWBlhOc7I8l5xC6Nqm3",
+    "events": {
+      "connect": true,
+      "disconnect": true,
+      "chat": false
+    }
+  },
+  "chat": {
+    "respond": true
+  }
+    }
