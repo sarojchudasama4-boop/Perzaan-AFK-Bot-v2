@@ -1,1 +1,38 @@
 
+const mineflayer = require('mineflayer');
+
+function createBot() {
+  const bot = mineflayer.createBot({
+    host: 'indiansfrindssmp.aternos.me', // Yahan apna Aternos Server ka IP daalein
+    port: 64139,                   // Apna Server Port daalein
+    username: 'Mobile_AFK_Bot',    // Bot ka naam (Cracked server ke liye kuch bhi)
+    version: false                 // Auto version detect
+  });
+
+  bot.on('spawn', () => {
+    console.log('Bot successfully server mein join ho gaya hai!');
+    
+    // Anti-AFK movement: Har 10 second mein jump karega aur idhar-udhar dekhega
+    setInterval(() => {
+      bot.setControlState('jump', true);
+      setTimeout(() => {
+        bot.setControlState('jump', false);
+      }, 500);
+      
+      const yaw = Math.random() * Math.PI * 2;
+      const pitch = (Math.random() - 0.5) * Math.PI;
+      bot.look(yaw, pitch);
+    }, 10000);
+  });
+
+  bot.on('end', () => {
+    console.log('Bot disconnect ho gaya. 5 second mein reconnect ho raha hai...');
+    setTimeout(createBot, 5000);
+  });
+
+  bot.on('error', (err) => {
+    console.log('Error aaya:', err.message);
+  });
+}
+
+createBot();
